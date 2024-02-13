@@ -1,4 +1,7 @@
 from django.db import models
+from ckeditor.fields import RichTextField
+
+
 
 class Slider(models.Model):
     DISCOUNT_DEAL = (
@@ -53,11 +56,39 @@ class Sub_Categroy(models.Model):
 
 
 
+class Section(models.Model):
+    name = models.CharField(max_length = 100)
+
+    def __str__(self):
+        return self.name
+
+class Product(models.Model):
+    Total_Quantity = models.IntegerField()
+    Availbility = models.IntegerField()
+    Featured_Image = models.CharField(max_length = 100)
+    Product_Name = models.CharField(max_length = 100)
+    Price = models.IntegerField()
+    Discount = models.IntegerField()
+    Product_information = RichTextField()
+    Model_Name = models.CharField(max_length = 100)
+    Categroy = models.ForeignKey(Categroy,on_delete = models.CASCADE)
+    Tags = models.CharField(max_length = 100)
+    Description = RichTextField()
+    Section = models.ForeignKey(Section,on_delete = models.DO_NOTHING)
+
+    def __str__(self):
+        return self.Product_Name
 
 
+class Product_Image(models.Model):
+    Product = models.ForeignKey(Product,on_delete = models.CASCADE)
+    Image_url = models.CharField(max_length = 100)
 
 
-
+class Additional_Information(models.Model):
+    Product = models.ForeignKey(Product,on_delete = models.CASCADE)   
+    Specification = models.CharField(max_length = 100)
+    detail = models.CharField(max_length = 100)
 
 
 
